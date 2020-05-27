@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" type="text/css" src="./styles.css" />
+
+    <title>Document</title>
+  </head>
+
+  {% block js %}
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("textarea[name='codigo']").text("{{ codigo|escapejs }}");
+    });
+  </script>
+
+  {% endblock js %}
+  <body class="bg">
+    <div class="container pt-5 pl-5 pr-5 pb-5 mt-5 bg-light">
+      <div class="row">
+        <div class="col-8">
+          <form action="{% url 'analiselexica' %}" method="post">
+            {% csrf_token %}
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Code</span>
+              </div>
+              <textarea
+                name="codigo"
+                class="form-control"
+                style="min-height: 400px; max-height: 400px;"
+                aria-label="With textarea"
+              ></textarea>
+            </div>
+            <div class="row mt-3 float-right">
+              <div class="col">
+                <button type="submit" class="btn btn-outline-success btn-block">
+                  Análise léxica
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-4" style="max-height: 400px;min-height: 400px;">
+            {% if lerror %}
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Token</th>
+                  <th>Lexema</th>
+                  <th>Linha</th>
+                  <th>Coluna</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for error in lerror %}
+    
+                <tr class="danger">
+                  <td>ERROR</td>
+                  <td>{{ error.0 }}</td>
+                  <td>{{ error.1 }}</td>
+                  <td>{{ error.2 }}</td>
+                </tr>
+    
+                {% endfor %}
+              </tbody>
+            </table>
+            {% endif %} {% if llex %}
+    
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Token</th>
+                  <th>Lexema</th>
+                  <th>Linha</th>
+                  <th>Coluna</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for tok in llex %}
+    
+                <tr class="success">
+                  <td>{{ tok.0 }}</td>
+                  <td>{{ tok.1 }}</td>
+                  <td>{{ tok.2 }}</td>
+                  <td>{{ tok.3 }}</td>
+                  <td></td>
+                </tr>
+    
+                {% endfor %}
+              </tbody>
+            </table>
+    
+            {% endif %}
+          </div>
+      </div>
+      
+    </div>
+  </body>
+</html>
