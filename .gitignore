@@ -1,2 +1,4 @@
 myvenv/
 .vscode/
+comp/__pycache__/
+db.sqlite3
