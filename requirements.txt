@@ -3,3 +3,6 @@ gunicorn
 django-heroku
 ply
 pyhcl 
+static
+dj-database-url
+dj-static
