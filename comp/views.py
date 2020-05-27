@@ -24,7 +24,7 @@ def analiselexica(request):
 
 	# tupla contendo os tokes
     tokens =[
-	    'ID','INT_VAL',
+	    'VAR','INT_VAL',
 	    'PLUS','MINUS','TIMES','DIVIDE','EQUALS',
 	    'LPAREN','RPAREN',
 	    'BEGIN','END','DELIMITER',
@@ -46,13 +46,13 @@ def analiselexica(request):
     # t_ID      = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
 
-    def t_ID(t):
+    def t_VAR(t):
         r'[a-zA-Z_][a-zA-Z_0-9]*'
-        t.type = reserved.get(t.value,'ID')    # Check for reserved words
+        t.type = reserved.get(t.value,'VAR')    # Check for reserved words
         return t
     
     def t_STRING(t):
-        r'"([^"\n]|(\\"))*"$'
+        r'"([^"]+)"'
         t.type = reserved.get(t.value,'STRING')
         return t
     

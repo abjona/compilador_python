@@ -39,7 +39,11 @@
 
   {% endblock js %}
   <body class="bg">
-    <div class="container pt-5 pl-5 pr-5 pb-5 mt-5 bg-light">
+    <div class="container pt-4 pl-5 pr-5 pb-5 mt-5 mb-5 bg-light">
+      <h4>COMPILADOR EM PYTHON</h4>
+      <hr/>
+      <p><b>Nomes : </b>Jonathan, Eduarda</p>
+      <p><b>Turma : </b>COMP7</p>
       <div class="row">
         <div class="col-8">
           <form action="{% url 'analiselexica' %}" method="post">
@@ -51,7 +55,7 @@
               <textarea
                 name="codigo"
                 class="form-control"
-                style="min-height: 400px; max-height: 400px;"
+                style="min-height: 300px; max-height: 300px;"
                 aria-label="With textarea"
               ></textarea>
             </div>
@@ -64,7 +68,7 @@
             </div>
           </form>
         </div>
-        <div class="col-4" style="max-height: 400px;min-height: 400px;">
+        <div class="col-4" style="max-height: 300px;min-height: 300px; overflow: auto;">
             {% if lerror %}
             <table class="table table-hover">
               <thead>
