@@ -41,9 +41,10 @@
   <body class="bg">
     <div class="container pt-4 pl-5 pr-5 pb-4 mt-5 mb-4 bg-light">
       <h4>COMPILADOR EM PYTHON</h4>
-      <hr/>
+      <hr />
       <p><b>Nomes : </b>Jonathan, Eduarda</p>
       <p><b>Turma : </b>COMP7</p>
+      <p><b>Exemplo : </b> (13+1)*2+1</p>
       <div class="row">
         <div class="col-8">
           <form action="{% url 'analiselexica' %}" method="post">
@@ -62,67 +63,80 @@
             <div class="row mt-3 float-right">
               <div class="col">
                 <button type="submit" class="btn btn-outline-success btn-block">
-                  Análise léxica
+                  Compilar
                 </button>
               </div>
             </div>
           </form>
-        
         </div>
-        <div class="col-4" style="max-height: 300px;min-height: 300px; overflow: auto;">
-            {% if lerror %}
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th>Token</th>
-                  <th>Lexema</th>
-                  <th>Linha</th>
-                  <th>Coluna</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for error in lerror %}
-    
-                <tr class="danger">
-                  <td>ERROR</td>
-                  <td>{{ error.0 }}</td>
-                  <td>{{ error.1 }}</td>
-                  <td>{{ error.2 }}</td>
-                </tr>
-    
-                {% endfor %}
-              </tbody>
-            </table>
-            {% endif %} {% if llex %}
-    
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th>Token</th>
-                  <th>Lexema</th>
-                  <th>Linha</th>
-                  <th>Coluna</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for tok in llex %}
-    
-                <tr class="success">
-                  <td>{{ tok.0 }}</td>
-                  <td>{{ tok.1 }}</td>
-                  <td>{{ tok.2 }}</td>
-                  <td>{{ tok.3 }}</td>
-                  <td></td>
-                </tr>
-    
-                {% endfor %}
-              </tbody>
-            </table>
-    
-            {% endif %}
+        <div
+          class="col-4"
+          style="max-height: 300px; min-height: 300px; overflow: auto;"
+        >
+          <!-- se tiver erro -->
+          {% if lerror %}
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Lexema</th>
+                <th>Linha</th>
+                <th>Coluna</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for error in lerror %}
+
+              <tr class="danger">
+                <td>ERROR</td>
+                <td>{{ error.0 }}</td>
+                <td>{{ error.1 }}</td>
+                <td>{{ error.2 }}</td>
+              </tr>
+
+              {% endfor %}
+            </tbody>
+          </table>
+
+          {% endif %} {% if llex %}
+
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Lexema</th>
+                <th>Linha</th>
+                <th>Coluna</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for tok in llex %}
+
+              <tr class="success">
+                <td>{{ tok.0 }}</td>
+                <td>{{ tok.1 }}</td>
+                <td>{{ tok.2 }}</td>
+                <td>{{ tok.3 }}</td>
+                <td></td>
+              </tr>
+
+              {% endfor %}
+            </tbody>
+          </table>
+
+          {% endif %}
+        </div>
+        <div class="col-lg-6">
+          {% if rsintatica %}
+
+          <h2>Análise Sintática:</h2>
+          <br />
+          <div class="alert alert-success">
+            <p>>>> {{ rsintatica }}</p>
           </div>
+          {% endif %}
+        </div>
       </div>
-      
     </div>
   </body>
 </html>

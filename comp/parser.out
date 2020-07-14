@@ -1,0 +1,500 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    DOUBLE_VAL
+    INT_VAL
+    STRING
+
+Grammar
+
+Rule 0     S' -> expression
+Rule 1     expression -> expression PLUS term
+Rule 2     expression -> expression MINUS term
+Rule 3     expression -> expression DIVIDE term
+Rule 4     expression -> expression TIMES term
+Rule 5     expression -> term
+Rule 6     term -> term TIMES factor
+Rule 7     term -> term DIVIDE factor
+Rule 8     term -> factor
+Rule 9     factor -> NUMBER
+Rule 10    statement -> assignment
+Rule 11    statement -> expression
+Rule 12    expression -> NUMBER
+Rule 13    expression -> VAR EQUALS expression END
+Rule 14    expression -> VAR EQUALS VAR END
+Rule 15    assignment -> VAR EQUALS NUMBER END
+Rule 16    statement -> PRINT expression END
+Rule 17    expression -> LPAREN expression RPAREN
+
+Terminals, with rules where they appear
+
+DIVIDE               : 3 7
+DOUBLE_VAL           : 
+END                  : 13 14 15 16
+EQUALS               : 13 14 15
+INT_VAL              : 
+LPAREN               : 17
+MINUS                : 2
+NUMBER               : 9 12 15
+PLUS                 : 1
+PRINT                : 16
+RPAREN               : 17
+STRING               : 
+TIMES                : 4 6
+VAR                  : 13 14 14 15
+error                : 
+
+Nonterminals, with rules where they appear
+
+assignment           : 10
+expression           : 1 2 3 4 11 13 16 17 0
+factor               : 6 7 8
+statement            : 
+term                 : 1 2 3 4 5 6 7
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expression
+    (1) expression -> . expression PLUS term
+    (2) expression -> . expression MINUS term
+    (3) expression -> . expression DIVIDE term
+    (4) expression -> . expression TIMES term
+    (5) expression -> . term
+    (12) expression -> . NUMBER
+    (13) expression -> . VAR EQUALS expression END
+    (14) expression -> . VAR EQUALS VAR END
+    (17) expression -> . LPAREN expression RPAREN
+    (6) term -> . term TIMES factor
+    (7) term -> . term DIVIDE factor
+    (8) term -> . factor
+    (9) factor -> . NUMBER
+
+    NUMBER          shift and go to state 3
+    VAR             shift and go to state 4
+    LPAREN          shift and go to state 5
+
+    expression                     shift and go to state 1
+    term                           shift and go to state 2
+    factor                         shift and go to state 6
+
+state 1
+
+    (0) S' -> expression .
+    (1) expression -> expression . PLUS term
+    (2) expression -> expression . MINUS term
+    (3) expression -> expression . DIVIDE term
+    (4) expression -> expression . TIMES term
+
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 8
+    DIVIDE          shift and go to state 9
+    TIMES           shift and go to state 10
+
+
+state 2
+
+    (5) expression -> term .
+    (6) term -> term . TIMES factor
+    (7) term -> term . DIVIDE factor
+
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    PLUS            reduce using rule 5 (expression -> term .)
+    MINUS           reduce using rule 5 (expression -> term .)
+    $end            reduce using rule 5 (expression -> term .)
+    RPAREN          reduce using rule 5 (expression -> term .)
+    END             reduce using rule 5 (expression -> term .)
+    TIMES           shift and go to state 11
+    DIVIDE          shift and go to state 12
+
+  ! DIVIDE          [ reduce using rule 5 (expression -> term .) ]
+  ! TIMES           [ reduce using rule 5 (expression -> term .) ]
+
+
+state 3
+
+    (12) expression -> NUMBER .
+    (9) factor -> NUMBER .
+
+  ! reduce/reduce conflict for TIMES resolved using rule 9 (factor -> NUMBER .)
+  ! reduce/reduce conflict for DIVIDE resolved using rule 9 (factor -> NUMBER .)
+  ! reduce/reduce conflict for PLUS resolved using rule 9 (factor -> NUMBER .)
+  ! reduce/reduce conflict for MINUS resolved using rule 9 (factor -> NUMBER .)
+  ! reduce/reduce conflict for $end resolved using rule 9 (factor -> NUMBER .)
+  ! reduce/reduce conflict for RPAREN resolved using rule 9 (factor -> NUMBER .)
+  ! reduce/reduce conflict for END resolved using rule 9 (factor -> NUMBER .)
+    TIMES           reduce using rule 9 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 9 (factor -> NUMBER .)
+    PLUS            reduce using rule 9 (factor -> NUMBER .)
+    MINUS           reduce using rule 9 (factor -> NUMBER .)
+    $end            reduce using rule 9 (factor -> NUMBER .)
+    RPAREN          reduce using rule 9 (factor -> NUMBER .)
+    END             reduce using rule 9 (factor -> NUMBER .)
+
+  ! PLUS            [ reduce using rule 12 (expression -> NUMBER .) ]
+  ! MINUS           [ reduce using rule 12 (expression -> NUMBER .) ]
+  ! DIVIDE          [ reduce using rule 12 (expression -> NUMBER .) ]
+  ! TIMES           [ reduce using rule 12 (expression -> NUMBER .) ]
+  ! $end            [ reduce using rule 12 (expression -> NUMBER .) ]
+  ! RPAREN          [ reduce using rule 12 (expression -> NUMBER .) ]
+  ! END             [ reduce using rule 12 (expression -> NUMBER .) ]
+
+
+state 4
+
+    (13) expression -> VAR . EQUALS expression END
+    (14) expression -> VAR . EQUALS VAR END
+
+    EQUALS          shift and go to state 13
+
+
+state 5
+
+    (17) expression -> LPAREN . expression RPAREN
+    (1) expression -> . expression PLUS term
+    (2) expression -> . expression MINUS term
+    (3) expression -> . expression DIVIDE term
+    (4) expression -> . expression TIMES term
+    (5) expression -> . term
+    (12) expression -> . NUMBER
+    (13) expression -> . VAR EQUALS expression END
+    (14) expression -> . VAR EQUALS VAR END
+    (17) expression -> . LPAREN expression RPAREN
+    (6) term -> . term TIMES factor
+    (7) term -> . term DIVIDE factor
+    (8) term -> . factor
+    (9) factor -> . NUMBER
+
+    NUMBER          shift and go to state 3
+    VAR             shift and go to state 4
+    LPAREN          shift and go to state 5
+
+    expression                     shift and go to state 14
+    term                           shift and go to state 2
+    factor                         shift and go to state 6
+
+state 6
+
+    (8) term -> factor .
+
+    TIMES           reduce using rule 8 (term -> factor .)
+    DIVIDE          reduce using rule 8 (term -> factor .)
+    PLUS            reduce using rule 8 (term -> factor .)
+    MINUS           reduce using rule 8 (term -> factor .)
+    $end            reduce using rule 8 (term -> factor .)
+    RPAREN          reduce using rule 8 (term -> factor .)
+    END             reduce using rule 8 (term -> factor .)
+
+
+state 7
+
+    (1) expression -> expression PLUS . term
+    (6) term -> . term TIMES factor
+    (7) term -> . term DIVIDE factor
+    (8) term -> . factor
+    (9) factor -> . NUMBER
+
+    NUMBER          shift and go to state 16
+
+    term                           shift and go to state 15
+    factor                         shift and go to state 6
+
+state 8
+
+    (2) expression -> expression MINUS . term
+    (6) term -> . term TIMES factor
+    (7) term -> . term DIVIDE factor
+    (8) term -> . factor
+    (9) factor -> . NUMBER
+
+    NUMBER          shift and go to state 16
+
+    term                           shift and go to state 17
+    factor                         shift and go to state 6
+
+state 9
+
+    (3) expression -> expression DIVIDE . term
+    (6) term -> . term TIMES factor
+    (7) term -> . term DIVIDE factor
+    (8) term -> . factor
+    (9) factor -> . NUMBER
+
+    NUMBER          shift and go to state 16
+
+    term                           shift and go to state 18
+    factor                         shift and go to state 6
+
+state 10
+
+    (4) expression -> expression TIMES . term
+    (6) term -> . term TIMES factor
+    (7) term -> . term DIVIDE factor
+    (8) term -> . factor
+    (9) factor -> . NUMBER
+
+    NUMBER          shift and go to state 16
+
+    term                           shift and go to state 19
+    factor                         shift and go to state 6
+
+state 11
+
+    (6) term -> term TIMES . factor
+    (9) factor -> . NUMBER
+
+    NUMBER          shift and go to state 16
+
+    factor                         shift and go to state 20
+
+state 12
+
+    (7) term -> term DIVIDE . factor
+    (9) factor -> . NUMBER
+
+    NUMBER          shift and go to state 16
+
+    factor                         shift and go to state 21
+
+state 13
+
+    (13) expression -> VAR EQUALS . expression END
+    (14) expression -> VAR EQUALS . VAR END
+    (1) expression -> . expression PLUS term
+    (2) expression -> . expression MINUS term
+    (3) expression -> . expression DIVIDE term
+    (4) expression -> . expression TIMES term
+    (5) expression -> . term
+    (12) expression -> . NUMBER
+    (13) expression -> . VAR EQUALS expression END
+    (14) expression -> . VAR EQUALS VAR END
+    (17) expression -> . LPAREN expression RPAREN
+    (6) term -> . term TIMES factor
+    (7) term -> . term DIVIDE factor
+    (8) term -> . factor
+    (9) factor -> . NUMBER
+
+    VAR             shift and go to state 22
+    NUMBER          shift and go to state 3
+    LPAREN          shift and go to state 5
+
+    expression                     shift and go to state 23
+    term                           shift and go to state 2
+    factor                         shift and go to state 6
+
+state 14
+
+    (17) expression -> LPAREN expression . RPAREN
+    (1) expression -> expression . PLUS term
+    (2) expression -> expression . MINUS term
+    (3) expression -> expression . DIVIDE term
+    (4) expression -> expression . TIMES term
+
+    RPAREN          shift and go to state 24
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 8
+    DIVIDE          shift and go to state 9
+    TIMES           shift and go to state 10
+
+
+state 15
+
+    (1) expression -> expression PLUS term .
+    (6) term -> term . TIMES factor
+    (7) term -> term . DIVIDE factor
+
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    PLUS            reduce using rule 1 (expression -> expression PLUS term .)
+    MINUS           reduce using rule 1 (expression -> expression PLUS term .)
+    $end            reduce using rule 1 (expression -> expression PLUS term .)
+    RPAREN          reduce using rule 1 (expression -> expression PLUS term .)
+    END             reduce using rule 1 (expression -> expression PLUS term .)
+    TIMES           shift and go to state 11
+    DIVIDE          shift and go to state 12
+
+  ! DIVIDE          [ reduce using rule 1 (expression -> expression PLUS term .) ]
+  ! TIMES           [ reduce using rule 1 (expression -> expression PLUS term .) ]
+
+
+state 16
+
+    (9) factor -> NUMBER .
+
+    TIMES           reduce using rule 9 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 9 (factor -> NUMBER .)
+    PLUS            reduce using rule 9 (factor -> NUMBER .)
+    MINUS           reduce using rule 9 (factor -> NUMBER .)
+    $end            reduce using rule 9 (factor -> NUMBER .)
+    RPAREN          reduce using rule 9 (factor -> NUMBER .)
+    END             reduce using rule 9 (factor -> NUMBER .)
+
+
+state 17
+
+    (2) expression -> expression MINUS term .
+    (6) term -> term . TIMES factor
+    (7) term -> term . DIVIDE factor
+
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    PLUS            reduce using rule 2 (expression -> expression MINUS term .)
+    MINUS           reduce using rule 2 (expression -> expression MINUS term .)
+    $end            reduce using rule 2 (expression -> expression MINUS term .)
+    RPAREN          reduce using rule 2 (expression -> expression MINUS term .)
+    END             reduce using rule 2 (expression -> expression MINUS term .)
+    TIMES           shift and go to state 11
+    DIVIDE          shift and go to state 12
+
+  ! DIVIDE          [ reduce using rule 2 (expression -> expression MINUS term .) ]
+  ! TIMES           [ reduce using rule 2 (expression -> expression MINUS term .) ]
+
+
+state 18
+
+    (3) expression -> expression DIVIDE term .
+    (6) term -> term . TIMES factor
+    (7) term -> term . DIVIDE factor
+
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    PLUS            reduce using rule 3 (expression -> expression DIVIDE term .)
+    MINUS           reduce using rule 3 (expression -> expression DIVIDE term .)
+    $end            reduce using rule 3 (expression -> expression DIVIDE term .)
+    RPAREN          reduce using rule 3 (expression -> expression DIVIDE term .)
+    END             reduce using rule 3 (expression -> expression DIVIDE term .)
+    TIMES           shift and go to state 11
+    DIVIDE          shift and go to state 12
+
+  ! DIVIDE          [ reduce using rule 3 (expression -> expression DIVIDE term .) ]
+  ! TIMES           [ reduce using rule 3 (expression -> expression DIVIDE term .) ]
+
+
+state 19
+
+    (4) expression -> expression TIMES term .
+    (6) term -> term . TIMES factor
+    (7) term -> term . DIVIDE factor
+
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    PLUS            reduce using rule 4 (expression -> expression TIMES term .)
+    MINUS           reduce using rule 4 (expression -> expression TIMES term .)
+    $end            reduce using rule 4 (expression -> expression TIMES term .)
+    RPAREN          reduce using rule 4 (expression -> expression TIMES term .)
+    END             reduce using rule 4 (expression -> expression TIMES term .)
+    TIMES           shift and go to state 11
+    DIVIDE          shift and go to state 12
+
+  ! DIVIDE          [ reduce using rule 4 (expression -> expression TIMES term .) ]
+  ! TIMES           [ reduce using rule 4 (expression -> expression TIMES term .) ]
+
+
+state 20
+
+    (6) term -> term TIMES factor .
+
+    TIMES           reduce using rule 6 (term -> term TIMES factor .)
+    DIVIDE          reduce using rule 6 (term -> term TIMES factor .)
+    PLUS            reduce using rule 6 (term -> term TIMES factor .)
+    MINUS           reduce using rule 6 (term -> term TIMES factor .)
+    $end            reduce using rule 6 (term -> term TIMES factor .)
+    RPAREN          reduce using rule 6 (term -> term TIMES factor .)
+    END             reduce using rule 6 (term -> term TIMES factor .)
+
+
+state 21
+
+    (7) term -> term DIVIDE factor .
+
+    TIMES           reduce using rule 7 (term -> term DIVIDE factor .)
+    DIVIDE          reduce using rule 7 (term -> term DIVIDE factor .)
+    PLUS            reduce using rule 7 (term -> term DIVIDE factor .)
+    MINUS           reduce using rule 7 (term -> term DIVIDE factor .)
+    $end            reduce using rule 7 (term -> term DIVIDE factor .)
+    RPAREN          reduce using rule 7 (term -> term DIVIDE factor .)
+    END             reduce using rule 7 (term -> term DIVIDE factor .)
+
+
+state 22
+
+    (14) expression -> VAR EQUALS VAR . END
+    (13) expression -> VAR . EQUALS expression END
+    (14) expression -> VAR . EQUALS VAR END
+
+    END             shift and go to state 25
+    EQUALS          shift and go to state 13
+
+
+state 23
+
+    (13) expression -> VAR EQUALS expression . END
+    (1) expression -> expression . PLUS term
+    (2) expression -> expression . MINUS term
+    (3) expression -> expression . DIVIDE term
+    (4) expression -> expression . TIMES term
+
+    END             shift and go to state 26
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 8
+    DIVIDE          shift and go to state 9
+    TIMES           shift and go to state 10
+
+
+state 24
+
+    (17) expression -> LPAREN expression RPAREN .
+
+    PLUS            reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+    $end            reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+    END             reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+
+
+state 25
+
+    (14) expression -> VAR EQUALS VAR END .
+
+    PLUS            reduce using rule 14 (expression -> VAR EQUALS VAR END .)
+    MINUS           reduce using rule 14 (expression -> VAR EQUALS VAR END .)
+    DIVIDE          reduce using rule 14 (expression -> VAR EQUALS VAR END .)
+    TIMES           reduce using rule 14 (expression -> VAR EQUALS VAR END .)
+    $end            reduce using rule 14 (expression -> VAR EQUALS VAR END .)
+    RPAREN          reduce using rule 14 (expression -> VAR EQUALS VAR END .)
+    END             reduce using rule 14 (expression -> VAR EQUALS VAR END .)
+
+
+state 26
+
+    (13) expression -> VAR EQUALS expression END .
+
+    PLUS            reduce using rule 13 (expression -> VAR EQUALS expression END .)
+    MINUS           reduce using rule 13 (expression -> VAR EQUALS expression END .)
+    DIVIDE          reduce using rule 13 (expression -> VAR EQUALS expression END .)
+    TIMES           reduce using rule 13 (expression -> VAR EQUALS expression END .)
+    $end            reduce using rule 13 (expression -> VAR EQUALS expression END .)
+    RPAREN          reduce using rule 13 (expression -> VAR EQUALS expression END .)
+    END             reduce using rule 13 (expression -> VAR EQUALS expression END .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for TIMES in state 2 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 2 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 15 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 15 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 17 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 17 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 18 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 18 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 19 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 19 resolved as shift
+WARNING: reduce/reduce conflict in state 3 resolved using rule (factor -> NUMBER)
+WARNING: rejected rule (expression -> NUMBER) in state 3
+WARNING: Rule (expression -> NUMBER) is never reduced
